@@ -9,6 +9,7 @@ typedef std::vector<std::string> stringVec;
 
 bool verbosity = true;
 bool boutput = true;
+bool defaultParams = true;
 
 stringVec nmapScanSwitches
 {
@@ -49,10 +50,10 @@ stringVec digSwitches
 
 void startup()
 {
-    std::cout << "                                          tttt                              SSSSSSSSSSSSSSS    " << std::endl;
-    std::cout << "                                       ttt:::t                            SS:::::::::::::::S" << std::endl;
-    std::cout << "                                       t:::::t                           S:::::SSSSSS::::::S  " << std::endl;
-    std::cout << "                                       t:::::t                           S:::::S     SSSSSSS " << std::endl;
+    std::cout << "                                          tttt                              SSSSSSSSSSSSSSS                                                        " << std::endl;
+    std::cout << "                                       ttt:::t                            SS:::::::::::::::S                                                       " << std::endl;
+    std::cout << "                                       t:::::t                           S:::::SSSSSS::::::S                                                       " << std::endl;
+    std::cout << "                                       t:::::t                           S:::::S     SSSSSSS                                                       " << std::endl;
     std::cout << "  aaaaaaaaaaaaa  uuuuuu    uuuuuuttttttt:::::ttttttt       ooooooooooo   S:::::S                cccccccccccccccc  aaaaaaaaaaaaa  nnnn  nnnnnnnn    " << std::endl;
     std::cout << "  a::::::::::::a u::::u    u::::ut:::::::::::::::::t     oo:::::::::::oo S:::::S              cc:::::::::::::::c  a::::::::::::a n:::nn::::::::nn  " << std::endl;
     std::cout << "  aaaaaaaaa:::::au::::u    u::::ut:::::::::::::::::t    o:::::::::::::::o S::::SSSS          c:::::::::::::::::c  aaaaaaaaa:::::an::::::::::::::nn " << std::endl;
@@ -86,26 +87,38 @@ int mainText()
 
 void settingsMenu(int caseVar)
 {
+    std::string input;
     switch (caseVar)
     {
     case 1:
-        std::cout << "Verbosity is set to " << verbosity << ", would you like to set it to " << !verbosity << "?" << std::endl;
+        std::cout << "\nVerbosity is set to " << verbosity << ", would you like to set it to " << !verbosity << "?(y/n)\n" << std::endl;
+        std::cin >> input;
+        if (input == "y")
+        {
+            verbosity = !verbosity;
+        }
         break;
     
     case 2:
-        std::cout << "Bash output is set to " << boutput << ", would you like to set it to " << !boutput << "?" << std::endl;
+        
+        std::cout << "\nBash output is set to " << boutput << ", would you like to set it to " << !boutput << "?(y/n)\n" << std::endl;
+        std::cin >> input;
+        if (input == "y")
+        {
+            boutput = !boutput;
+        }
         break;
     
     case 3:
-        std::cout << "implement this" << std::endl;
+        std::cout << "\nimplement this\n" << std::endl;
         break;
     
     case 9:
-        std::cout << "Exiting Settings Menu" << std::endl;
+        std::cout << "\nExiting Settings Menu\n" << std::endl;
         break;
     
     default:
-        std::cout << "Invalid Argument, Please Choose a Valid Option" << std::endl;
+        std::cout << "\nInvalid Argument, Please Choose a Valid Option\n" << std::endl;
         break;
     }
 }
@@ -121,13 +134,69 @@ void autoScanSettingsMenu()
         std::cout << " ----------------------------" << std::endl;
 
         std::cin >> var;
+        settingsMenu(var);
     }
     
+}
+
+void nmapScan()
+{
+    if (defaultParams)
+    {
+        /* code */
+    } else
+    {
+        /* code */
+    }
+}
+
+void digScan()
+{
+    if (defaultParams)
+    {
+        /* code */
+    } else
+    {
+        /* code */
+    }
+}
+
+void niktoScan()
+{
+    if (defaultParams)
+    {
+        /* code */
+    } else
+    {
+        /* code */
+    }
+}
+
+void scanSetter(int nmap, int dig, int nikto)
+{
+    if (nmap == 1)
+    {
+        std::cout << "Starting nMap Scan..." << std::endl;
+        nmapScan();
+    }
+
+    if (dig == 1)
+    {
+        std::cout << "Starting Dig Scan..." << std::endl;
+        digScan();
+    }
+
+    if (nikto == 1)
+    {
+        std::cout << "Starting Nikto Scan..." << std::endl;
+        niktoScan();
+    }  
 }
 
 void mainMenu(int caseVar)
 {
     std::cout << "" << std::endl;
+    int x, y, z;
 
     switch (caseVar)
     {
@@ -140,19 +209,23 @@ void mainMenu(int caseVar)
         break;
     
     case 2:
-        int x, y, z;
         std::cout << "Select which scans to run nMap[0(N)/1(Y)], Dig[0(N)/1(Y)], Nikto[0(N)/1(Y)]" << std::endl;
         std::cin >> x >> y >> z; //pass this to selector function
         verbosity = false;
         boutput = false;
+        scanSetter(x, y, z);
         break;
     
     case 3:
+        defaultParams = false;
         std::cout << "hello" << std::endl;
         break;
     
     case 4:
-        std::cout << "hello" << std::endl;
+        defaultParams = false;
+        std::cout << "Select which scans to run nMap[0(N)/1(Y)], Dig[0(N)/1(Y)], Nikto[0(N)/1(Y)]" << std::endl;
+        std::cin >> x >> y >> z;
+        scanSetter(x, y, z);
         break;
     
     case 5:
